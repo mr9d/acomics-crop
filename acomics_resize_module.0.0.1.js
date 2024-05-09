@@ -250,10 +250,17 @@
                 let viewportImageOffset = backImageTypeArea.getBoundingClientRect();
                 getTouchCoords(evt);
 
-                areaTop = clY - viewportImageOffset.top - 125;
-                areaBot = viewportImageOffset.height - areaTop - 250;
-                areaLeft = clX - viewportImageOffset.left - 125;
-                areaRight = viewportImageOffset.width - areaLeft - 250;
+                if (viewportImageOffset.width <= 300) {
+                    areaLeft = 0;
+                    areaTop = clY - viewportImageOffset.top - viewportImageOffset.width / 2;
+                    areaRight = 0;
+                    areaBot = viewportImageOffset.height - areaTop - viewportImageOffset.width;
+                } else {
+                    areaTop = clY - viewportImageOffset.top - 125;
+                    areaBot = viewportImageOffset.height - areaTop - 250;
+                    areaLeft = clX - viewportImageOffset.left - 125;
+                    areaRight = viewportImageOffset.width - areaLeft - 250;
+                }
 
                 checkBorders();
 
@@ -487,10 +494,17 @@
             backImageTypeArea.style.backgroundImage = "url('" + fileReader.result + "')";
 
             let viewportImageOffset = backImageTypeArea.getBoundingClientRect();
-            areaLeft = 50;
-            areaTop = 50;
-            areaRight = viewportImageOffset.width - 300;
-            areaBot = viewportImageOffset.height - 300;
+            if (viewportImageOffset.width <= 300) {
+                areaLeft = 0;
+                areaTop = 0;
+                areaRight = 0;
+                areaBot = viewportImageOffset.height - viewportImageOffset.width;
+            } else {
+                areaLeft = 50;
+                areaTop = 50;
+                areaRight = viewportImageOffset.width - 300;
+                areaBot = viewportImageOffset.height - 300;
+            }
 
             imagePosY = 0;
             imagePosX = 0;
@@ -547,15 +561,14 @@
                     const dx = initImageWidth / viewportImageOffset.width;
                     const dy = initImageHeight / viewportImageOffset.height;
 
-                    canvas.width = targetWidth * dx;
-                    canvas.height = targetHeight * dy;
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
                     let context = canvas.getContext('2d');
 
                     context.drawImage(img, areaLeft * dx, areaTop * dy, initImageWidth - areaLeft * dx - areaRight * dx, initImageHeight - areaTop * dy - areaBot * dy, 0, 0, canvas.width, canvas.height);
                 } else {
-                    const dx = Math.min(initImageWidth / resizeWindowWidth, initImageHeight / resizeWindowHeight);
-                    canvas.width = targetWidth * dx;
-                    canvas.height = targetHeight * dx;
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
                     let context = canvas.getContext('2d');
 
                     const sourceX = initImageWidth / 2 - imagePosX / zoom - (resizeWindowWidth / 2) / zoom;
@@ -569,6 +582,14 @@
                     dt.items.clear();
                     dt.items.add(new File([blob], 'updatedFile.png', {type: "image/png"}));
                     currentFileInput.files = dt.files;
+
+                    console.log(currentFileInput.files[0])
+                    var link = document.createElement("a");
+                    var file = currentFileInput.files[0];
+                    link.download = "123";
+                    link.href = URL.createObjectURL(file);
+                    link.click();
+
                     imageRefactorPage.classList.add('resize-module_disable')
                 });
             });
@@ -626,5 +647,3 @@
     imageInputChangeMethod();
     imageRefactorMethod();
 })();
-
-
