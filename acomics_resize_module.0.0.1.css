@@ -73,9 +73,8 @@
 }
 .resize-module-container__body {
     flex-direction: column;
-    min-width: 720px;
     max-width: 100%;
-    max-height: calc(100vh - 258px);
+    max-height: calc(100vh - 250px);
     height: 100%;
     padding: 16px 0 0 0;
     border-top: 2px solid var(--color-text-second__hover);
@@ -110,7 +109,7 @@
 }
 .resize-module-container__body-box_type_area {
     width: 100%;
-    height: calc(100vh - 240px);
+    height: 100vh;
     overflow: scroll;
 }
 .resize-module-container__background-box {
