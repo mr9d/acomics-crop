@@ -582,14 +582,6 @@
                     dt.items.clear();
                     dt.items.add(new File([blob], 'updatedFile.png', {type: "image/png"}));
                     currentFileInput.files = dt.files;
-
-                    console.log(currentFileInput.files[0])
-                    var link = document.createElement("a");
-                    var file = currentFileInput.files[0];
-                    link.download = "123";
-                    link.href = URL.createObjectURL(file);
-                    link.click();
-
                     imageRefactorPage.classList.add('resize-module_disable')
                 });
             });
