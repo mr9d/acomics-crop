@@ -1,4 +1,5 @@
 (function () {
+
     const imageRefactorPage = document.createElement('div');
     const initHTML = () => {
         imageRefactorPage.className = 'resize-module resize-module_disable';
