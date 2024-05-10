@@ -1,5 +1,4 @@
 (function () {
-
     const imageRefactorPage = document.createElement('div');
     const initHTML = () => {
         imageRefactorPage.className = 'resize-module resize-module_disable';
@@ -236,6 +235,7 @@
                     clX = evt.clientX;
                     clY = evt.clientY;
                 }
+                console.log(clX, clY);
             }
             const checkBorders = () => {
                 if (areaTop < 0) {
@@ -256,6 +256,7 @@
                 }
             }
             const imageSetAreaPos = (evt) => {
+                evt.preventDefault();
                 let viewportImageOffset = backImageTypeArea.getBoundingClientRect();
                 getTouchCoords(evt);
 
@@ -286,6 +287,7 @@
                 document.addEventListener("mousemove", imageScrollWithArea);
             }
             backImageTypeArea.addEventListener("mousedown", imageSetAreaPos);
+            backImageTypeArea.addEventListener("touchstart", imageSetAreaPos);
             document.querySelector(".scale-cube_pos_tr").addEventListener("mousedown", () => {
                 scrollDirection = 1;
             })
@@ -296,6 +298,18 @@
                 scrollDirection = 3;
             })
             document.querySelector(".scale-cube_pos_br").addEventListener("mousedown", () => {
+                scrollDirection = 4;
+            })
+            document.querySelector(".scale-cube_pos_tr").addEventListener("touchstart", () => {
+                scrollDirection = 1;
+            })
+            document.querySelector(".scale-cube_pos_tl").addEventListener("touchstart", () => {
+                scrollDirection = 2;
+            })
+            document.querySelector(".scale-cube_pos_bl").addEventListener("touchstart", () => {
+                scrollDirection = 3;
+            })
+            document.querySelector(".scale-cube_pos_br").addEventListener("touchstart", () => {
                 scrollDirection = 4;
             })
             const imageScrollWithArea = (evt) => {
@@ -421,8 +435,10 @@
             const imageClickUp = () => {
                 scrollDirection = 0;
                 document.removeEventListener("mousemove", imageScrollWithArea);
+                document.removeEventListener("touchmove", imageScrollWithArea);
             }
             document.addEventListener("mouseup", imageClickUp);
+            document.addEventListener("touchend", imageClickUp);
         }
         areaEvents();
 
@@ -703,5 +719,3 @@
     imageInputChangeMethod();
     imageRefactorMethod();
 })();
-
-
