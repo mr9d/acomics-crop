@@ -51,6 +51,7 @@
     border-radius: 8px;
     background-color: var(--color-resizeBox);
 }
+
 .resize-module-container__header {
     margin-left: 136px;
     width: calc(100% - 136px);
@@ -116,6 +117,36 @@
     width: 100%;
     height: 100%;
     overflow: scroll;
+}
+.resize-module-container__body-box_type_area::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+.resize-module-container__body-box_type_area::-webkit-scrollbar-corner {
+    background: var(--color-text-second__hover);
+    background-clip: padding-box;
+}
+.resize-module-container__body-box_type_area::-webkit-scrollbar-track:vertical {
+    background: var(--color-text-second__hover);
+    border-radius: 15px 0 0 0;
+}
+.resize-module-container__body-box_type_area::-webkit-scrollbar-track:horizontal {
+    background: var(--color-text-second__hover);
+    border-radius: 15px 0 0 0;
+}
+.resize-module-container__body-box_type_area::-webkit-scrollbar-thumb:vertical {
+    background: var(--color-resizeBox);
+    border-radius: 15px 0 15px 0;
+    border-left: 2px solid transparent;
+    border-top: 2px solid transparent;
+    background-clip: padding-box;
+}
+.resize-module-container__body-box_type_area::-webkit-scrollbar-thumb:horizontal {
+    background: var(--color-resizeBox);
+    border-radius: 15px 0 15px 0;
+    border-left: 2px solid transparent;
+    border-top: 2px solid transparent;
+    background-clip: padding-box;
 }
 .resize-module-container__background-box {
     position: absolute;
