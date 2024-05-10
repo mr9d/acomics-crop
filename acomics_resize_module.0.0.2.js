@@ -236,7 +236,6 @@
                     clX = evt.clientX;
                     clY = evt.clientY;
                 }
-                console.log(clX, clY);
             }
             const checkBorders = () => {
                 if (areaTop < 0) {
@@ -641,14 +640,6 @@
                     dt.items.clear();
                     dt.items.add(new File([blob], 'updatedFile.png', {type: "image/png"}));
                     currentFileInput.files = dt.files;
-
-                    var tempLink = document.createElement("a");
-                    tempLink.setAttribute('href', URL.createObjectURL(currentFileInput.files[0]));
-                    tempLink.setAttribute('download', `${name.toLowerCase()}.txt`);
-                    tempLink.click();
-
-                    URL.revokeObjectURL(tempLink.href);
-
                     imageRefactorPage.classList.add('resize-module_disable')
                 });
             });
