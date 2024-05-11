@@ -9,7 +9,7 @@
     "test": "echo No tests yet",
     "lint": "eslint src/**",
     "lint:fix": "eslint --fix src/**",
-    "build": "npx webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js",
     "release:prepare": "npm run lint && npm run test && npm run clean && npm run build",
     "release:create": "node release",
     "release:major": "npm run release:prepare && npm version major && npm run release:create",

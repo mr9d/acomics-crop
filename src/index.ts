@@ -6,8 +6,7 @@ import './index.css';
 const imageRefactorPage = document.createElement('div');
 const initHTML = () => {
   imageRefactorPage.className = 'resize-module resize-module_disable';
-  const htmlString = templateHtml;
-  imageRefactorPage.insertAdjacentHTML('beforeend', htmlString);
+  imageRefactorPage.insertAdjacentHTML('beforeend', templateHtml);
   document.body.appendChild(imageRefactorPage);
 };
 initHTML();
@@ -613,7 +612,7 @@ const setImagesWidth = (width: number) => {
   (document.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.bottom = areaBot + "px";
   (document.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.width = areaRight + "px";
 };
-const setImagesPosition = (posX: string|number, posY: string|number) => {
+const setImagesPosition = (posX: string | number, posY: string | number) => {
   resizeCircleWheelOffset = resizeCircleWheel.getBoundingClientRect();
   resizeCircleArrowsOffset = resizeCircleArrows.getBoundingClientRect();
 
