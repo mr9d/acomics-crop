@@ -1,3 +1,4 @@
+import { compressImage } from './compressImage';
 import templateHtml from './template.html';
 
 import './index.css';
@@ -63,23 +64,6 @@ imageRefactorPage.addEventListener("selectstart", (evt) => evt.preventDefault())
 const fileReader = new FileReader();
 
 const resizeModuleContainers: NodeListOf<HTMLElement> = document.querySelectorAll("[data-type]");
-
-const compressImage = async (file: File, { quality = 1, type = file.type }): Promise<Blob> => {
-  // Get as image data
-  const imageBitmap = await createImageBitmap(file);
-
-  // Draw to canvas
-  const canvas = document.createElement('canvas');
-  canvas.width = imageBitmap.width;
-  canvas.height = imageBitmap.height;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(imageBitmap, 0, 0);
-
-  // Turn into Blob
-  return await new Promise((resolve) =>
-    canvas.toBlob(resolve, type, quality)
-  );
-};
 
 const imageRefactorMethod = () => {
   let mousePosX: number, mousePosY: number;
