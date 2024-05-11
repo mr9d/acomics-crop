@@ -1,4 +1,4 @@
-# acomics-resize-module
+# Acomics Crop
 
 Модуль обработки изображений при загрузке на сайт. Первостепенно используется для аватарок.
 
@@ -6,3 +6,10 @@
 
 Для использования модуля импортируте "acomics_resize_module.0.0.1.js", "acomics_resize_module.0.0.1.css",
 а также добавьте класс "imageResizeAndCrop" и дата атрибуты data-target-width и data-target-height, задающиее соответственно ширину и высоту изображения после обработки, на нужные элементы <input>.
+
+## Установка
+
+```
+npm ci
+npm run build
+```

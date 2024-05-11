@@ -1,0 +1,41 @@
+{
+  "name": "acomics-crop",
+  "version": "1.0.5",
+  "description": "Acomics crop and resize library written in TypeScript",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "test": "echo No tests yet",
+    "lint": "eslint src/**",
+    "lint:fix": "eslint --fix src/**",
+    "build": "npx webpack --config webpack.config.js",
+    "release:prepare": "npm run lint && npm run test && npm run clean && npm run build",
+    "release:create": "node release",
+    "release:major": "npm run release:prepare && npm version major && npm run release:create",
+    "release:minor": "npm run release:prepare && npm version minor && npm run release:create",
+    "release:patch": "npm run release:prepare && npm version patch && npm run release:create"
+  },
+  "author": {
+    "name": "Aleksandr Kozlov",
+    "email": "themrgd@gmail.com",
+    "url": "https://github.com/mr9d"
+  },
+  "contributors": [
+    "Dmitry Dostovalov",
+    "Andrey Pashkin"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "css-loader": "^7.1.1",
+    "eslint": "^8.57.0",
+    "globals": "^15.2.0",
+    "html-loader": "^5.0.0",
+    "mini-css-extract-plugin": "^2.9.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.8.0",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
