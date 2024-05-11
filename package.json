@@ -1,7 +1,7 @@
 {
   "name": "acomics-crop",
   "repository": "git@github.com:mr9d/acomics-crop.git",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "Acomics crop and resize library written in TypeScript",
   "main": "dist/bundle.js",
   "scripts": {
@@ -10,11 +10,11 @@
     "lint": "eslint src/**",
     "lint:fix": "eslint --fix src/**",
     "build": "webpack --config webpack.config.js",
-    "release:prepare": "npm run lint && npm run test && npm run clean && npm run build",
-    "release:create": "node release",
-    "release:major": "npm run release:prepare && npm version major && npm run release:create",
-    "release:minor": "npm run release:prepare && npm version minor && npm run release:create",
-    "release:patch": "npm run release:prepare && npm version patch && npm run release:create"
+    "release:prepare": "npm run lint && npm run test && npm run clean && npm run build && node release",
+    "preversion": "git add .",
+    "release:major": "npm run release:prepare && npm version major --force",
+    "release:minor": "npm run release:prepare && npm version minor --force",
+    "release:patch": "npm run release:prepare && npm version patch --force"
   },
   "author": {
     "name": "Aleksandr Kozlov",
