@@ -10,7 +10,8 @@
     "lint": "eslint src/**",
     "lint:fix": "eslint --fix src/**",
     "build": "webpack --config webpack.config.js",
-    "preversion": "npm run lint && npm run test && npm run clean && npm run build && node release && git add .",
+    "preversion": "npm run lint && npm run test && npm run clean && npm run build",
+    "version": "node release && git add .",
     "release:major": "npm version major",
     "release:minor": "npm version minor",
     "release:patch": "npm version patch"
