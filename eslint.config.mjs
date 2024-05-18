@@ -12,6 +12,7 @@ export default [
       semi: "error",
       "prefer-const": "error",
       indent: ["error", 2],
+      eqeqeq: ["error", "always"],
     }
 }
 ];
