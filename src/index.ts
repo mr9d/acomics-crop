@@ -45,17 +45,17 @@ const stopPageScrolling = () => {
   if (document.body.clientHeight > document.scrollingElement.clientHeight) {
     document.body.style.overflowY = 'scroll';
   }
-}
+};
 const continuePageScrolling = () => {
   const scrollY = document.body.style.top;
   document.body.style.position = '';
   document.body.style.top = '';
   window.scrollTo(0, parseInt(scrollY || '0') * -1);
   document.body.style.overflowY = '';
-}
+};
 const alertImageIncorrectSize = () => {
   alert("Размер изображения не соответствует заданным параметрам.");
-}
+};
 const imageRefactorMethod = () => {
   let scrollDirection = 0;
   let selectDirection = 0;
@@ -111,7 +111,7 @@ const imageRefactorMethod = () => {
           areaRight = viewportImageOffset.width - areaLeft - (targetWidth / dRes);
         }
       }
-    }
+    };
     const imageSetAreaPos = (evt: MouseEvent) => {
       evt.preventDefault();
       viewportImageOffset = backImage.getBoundingClientRect();
@@ -292,7 +292,7 @@ const imageRefactorMethod = () => {
         prevX = clX;
         prevY = clY;
       }
-    }
+    };
     const imageClickUp = () => {
       checkProportions();
 
@@ -355,7 +355,7 @@ const imageInputChangeMethod = () => {
     } else {
       openResizeModule();
     }
-  }
+  };
   const getImageData = () => {
     initImageWidth = img.naturalWidth;
     initImageHeight = img.naturalHeight;
@@ -434,14 +434,14 @@ const imageInputChangeMethod = () => {
     imageRefactorPage.classList.add("resize-module_disable");
 
     window.removeEventListener("resize", updateImageAfterWindowResize);
-  }
+  };
   const openResizeModule = () => {
     stopPageScrolling();
     imageRefactorPage.classList.remove("resize-module_disable");
 
     window.addEventListener("resize", updateImageAfterWindowResize);
     getImageData();
-  }
+  };
 
   document.querySelector(".resize-module-container__button_type-deny").addEventListener("click", removeUpdates);
   document.querySelector(".resize-module-container__close-button").addEventListener("click", removeUpdates);
