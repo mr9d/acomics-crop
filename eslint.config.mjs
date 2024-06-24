@@ -14,5 +14,5 @@ export default [
       indent: ["error", 2],
       eqeqeq: ["error", "always"],
     }
-}
+  }
 ];

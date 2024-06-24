@@ -7,7 +7,7 @@ const version = package.version;
 const dir = `versions/${version}`;
 
 if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir, {recursive: true});
+  fs.mkdirSync(dir, {recursive: true});
 }
 
 fs.copyFileSync('dist/bundle.js', `${dir}/bundle.js`);
@@ -16,8 +16,8 @@ fs.copyFileSync('dist/bundle.css', `${dir}/bundle.css`);
 //
 // See https://www.srihash.org/ for more info about this section
 //
-const jsSriHash = sri.getSRIString(`${dir}/bundle.js`);
-const cssSriHash = sri.getSRIString(`${dir}/bundle.css`);
+const jsSriHash = sri.getSRIString(fs.readFileSync(`${dir}/bundle.js`).toString());
+const cssSriHash = sri.getSRIString(fs.readFileSync(`${dir}/bundle.css`).toString());
 
 const readmeContent = `# Встраивание модуля на страницу
 
