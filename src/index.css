@@ -27,6 +27,7 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  user-select: none;
 }
 
 .resize-module_disable {
@@ -148,7 +149,7 @@
 
 .resize-module-container__background {
   position: absolute;
-  background: rgba(211, 205, 197, 0.3);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .resize-module-container__background_pos_t {

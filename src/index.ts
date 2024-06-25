@@ -1,15 +1,10 @@
 import { compressImage } from './compressImage';
-import templateHtml from './template.html';
+import { pausePageScroll, resumePageScroll } from './pageScroll';
+import { initCropPopup, openCropPopup, closeCropPopup } from './cropPopup';
 
 import './index.css';
 
-const imageRefactorPage = document.createElement('div');
-const initHTML = () => {
-  imageRefactorPage.className = 'resize-module resize-module_disable';
-  imageRefactorPage.insertAdjacentHTML('beforeend', templateHtml);
-  document.body.appendChild(imageRefactorPage);
-};
-initHTML();
+initCropPopup();
 
 const resizableFileInputs = document.querySelectorAll('input[class="imageResizeAndCrop"]');
 let currentFileInput: HTMLInputElement;
@@ -34,28 +29,12 @@ let areaRight = 0;
 let fixedPosX: number;
 let fixedPosY: number;
 
-
-imageRefactorPage.addEventListener("selectstart", (evt) => evt.preventDefault());
-
 const fileReader = new FileReader();
 
-const stopPageScrolling = () => {
-  document.body.style.top = '-' + window.scrollY + 'px';
-  document.body.style.position = 'fixed';
-  if (document.body.clientHeight > document.scrollingElement.clientHeight) {
-    document.body.style.overflowY = 'scroll';
-  }
-};
-const continuePageScrolling = () => {
-  const scrollY = document.body.style.top;
-  document.body.style.position = '';
-  document.body.style.top = '';
-  window.scrollTo(0, parseInt(scrollY || '0') * -1);
-  document.body.style.overflowY = '';
-};
 const alertImageIncorrectSize = () => {
   alert("Размер изображения не соответствует заданным параметрам.");
 };
+
 const imageRefactorMethod = () => {
   let scrollDirection = 0;
   let selectDirection = 0;
@@ -74,6 +53,7 @@ const imageRefactorMethod = () => {
         clY = (evt as MouseEvent).clientY;
       }
     };
+
     const checkBorders = () => {
       if (areaTop < 0) {
         areaBot += areaTop;
@@ -92,6 +72,7 @@ const imageRefactorMethod = () => {
         areaRight = 0;
       }
     };
+
     const checkMinSize = () => {
       const dh = (viewportImageOffset.height - areaTop - areaBot);
       const dw = (viewportImageOffset.width - areaLeft - areaRight);
@@ -112,6 +93,7 @@ const imageRefactorMethod = () => {
         }
       }
     };
+
     const imageSetAreaPos = (evt: MouseEvent) => {
       evt.preventDefault();
       viewportImageOffset = backImage.getBoundingClientRect();
@@ -143,8 +125,10 @@ const imageRefactorMethod = () => {
       document.addEventListener("touchmove", imageScrollWithArea);
       document.addEventListener("mousemove", imageScrollWithArea);
     };
+
     backImage.addEventListener("mousedown", imageSetAreaPos);
     backImage.addEventListener("touchstart", imageSetAreaPos);
+
     document.querySelector(".scale-cube_pos_tr").addEventListener("mousedown", () => {
       scrollDirection = 1;
     });
@@ -169,6 +153,7 @@ const imageRefactorMethod = () => {
     document.querySelector(".scale-cube_pos_br").addEventListener("touchstart", () => {
       scrollDirection = 4;
     });
+
     const imageScrollWithArea = (evt: TouchEvent) => {
       getTouchCoords(evt);
 
@@ -255,6 +240,7 @@ const imageRefactorMethod = () => {
       setImagesWidth();
       setImagesPosition();
     };
+
     const checkProportions = () => {
       const dw = (viewportImageOffset.width - areaLeft - areaRight) * targetHeight;
       const dh = (viewportImageOffset.height - areaTop - areaBot) * targetWidth;
@@ -293,6 +279,7 @@ const imageRefactorMethod = () => {
         prevY = clY;
       }
     };
+
     const imageClickUp = () => {
       checkProportions();
 
@@ -307,12 +294,14 @@ const imageRefactorMethod = () => {
       document.removeEventListener("mousemove", imageScrollWithArea);
       document.removeEventListener("touchmove", imageScrollWithArea);
     };
+
     document.addEventListener("mouseup", imageClickUp);
     document.addEventListener("touchend", imageClickUp);
-
   };
+
   areaEvents();
 };
+
 const imageInputChangeMethod = () => {
 
   const fileChange = async function () {
@@ -340,12 +329,14 @@ const imageInputChangeMethod = () => {
       img.addEventListener("load", checkImageForCompliance);
     }, {once:true});
   };
+
   resizableFileInputs.forEach((fileInput: HTMLInputElement) => {
     fileInput.addEventListener("change", () => {
       currentFileInput = fileInput;
       fileChange();
     });
   });
+
   const checkImageForCompliance = () => {
     if (img.width < targetWidth || img.height < targetHeight) {
       removeUpdates();
@@ -354,6 +345,7 @@ const imageInputChangeMethod = () => {
       openResizeModule();
     }
   };
+
   const getImageData = () => {
     initImageWidth = img.naturalWidth;
     initImageHeight = img.naturalHeight;
@@ -389,9 +381,11 @@ const imageInputChangeMethod = () => {
     setImagesWidth();
     setImagesPosition();
   };
+
   const updateImageAfterWindowResize = () => {
     getImageData();
   };
+
   window.removeEventListener("resize", updateImageAfterWindowResize);
 
   const saveUpdatedImageEvent = () => {
@@ -399,7 +393,7 @@ const imageInputChangeMethod = () => {
     const canvas: HTMLCanvasElement = document.querySelector('.canvas_crop');
 
     cropButton.addEventListener("click", () => {
-      continuePageScrolling();
+      resumePageScroll();
 
       const dx = initImageWidth / viewportImageOffset.width;
       const dy = initImageHeight / viewportImageOffset.height;
@@ -418,28 +412,34 @@ const imageInputChangeMethod = () => {
       closeResizeModule();
     });
   };
+
   saveUpdatedImageEvent();
+
   const removeUpdates = () => {
     currentFileInput.files = null;
     currentFileInput.value = '';
     closeResizeModule();
   };
+
   const closeResizeModule = () => {
-    continuePageScrolling();
-    imageRefactorPage.classList.add("resize-module_disable");
+    resumePageScroll();
+    closeCropPopup();
 
     window.removeEventListener("resize", updateImageAfterWindowResize);
   };
+
   const openResizeModule = () => {
-    stopPageScrolling();
-    imageRefactorPage.classList.remove("resize-module_disable");
+    pausePageScroll();
+    openCropPopup();
 
     window.addEventListener("resize", updateImageAfterWindowResize);
     getImageData();
   };
+
   document.querySelector(".resize-module-container__button_type-deny").addEventListener("click", removeUpdates);
   document.querySelector(".resize-module-container__close-button").addEventListener("click", removeUpdates);
 };
+
 const setImagesWidth = () => {
   frontImage.style.height = (viewportImageOffset.height - areaTop - areaBot) + "px";
   frontImage.style.width = (viewportImageOffset.width - areaLeft - areaRight) + "px";
@@ -455,6 +455,7 @@ const setImagesWidth = () => {
   (document.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.bottom = areaBot + "px";
   (document.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.width = areaRight + "px";
 };
+
 const setImagesPosition = () => {
   frontImage.style.backgroundPosition = -areaLeft + "px " + -areaTop + "px";
   frontImage.style.left = areaLeft + "px";
