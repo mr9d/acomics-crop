@@ -1,4 +1,4 @@
-:root {
+.resize-module {
   --color-interface: rgb(240, 240, 240);
   --color-resizeBox: rgb(241, 235, 227);
   --color-text-main: rgb(45, 45, 45);
@@ -7,16 +7,8 @@
   --color-text-second__hover: rgb(211, 205, 197);
   --color-active: rgb(239, 168, 33);
   --color-active__hover: rgb(211, 19, 53);
-
   --hover-delay-midle: 0.5s;
-}
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
-.resize-module {
   position: fixed;
   z-index: 1000;
   top: 0;

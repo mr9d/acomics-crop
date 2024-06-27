@@ -24,13 +24,21 @@
 Добавьте элемент для загрузки файла:
 
 ```html
-<input type="file" class="imageResizeAndCrop" data-target-width="200" data-target-height="200">
+<input type="file"
+       class="imageResizeAndCrop"
+       data-target-width="200"
+       data-target-height="200"
+       data-module-header="Ваше фото"
+       data-module-description="Выберите часть изображения, которая будет использоваться в качестве аватарки">
 ```
 
 где:
+
 * `imageResizeAndCrop` - класс, по которому происходит инициализация модуля.
 * `data-target-width` - требуемая ширина изображения.
 * `data-target-height` - требуемая высота изображения.
+* `data-module-header` - заголовок всплывающего окна.
+* `data-module-description` - описание всплывающего окна.
 
 ## Локальный запуск
 

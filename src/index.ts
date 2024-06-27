@@ -7,7 +7,7 @@ import './index.css';
 const dt = new DataTransfer();
 const fileReader = new FileReader();
 
-initCropPopup();
+const cropPopup = initCropPopup();
 
 let dRes = 1;
 let targetWidth: number;
@@ -19,12 +19,12 @@ let initImageHeight: number;
 
 const cropFileInputs: NodeListOf<HTMLInputElement> = document.querySelectorAll('input[class="imageResizeAndCrop"]');
 let currentFileInput: HTMLInputElement;
-const backImage: HTMLElement = document.querySelector(".resize-module-container__body-image");
-const frontImage: HTMLElement = document.querySelector(".resize-module-container__body-image-area");
-const moduleTitle: HTMLElement = document.querySelector(".resize-module-container__body-paragraph");
-const confirmButton: HTMLButtonElement = document.querySelector(".resize-module-container__button_type-confirm");
-const denyButton: HTMLButtonElement = document.querySelector(".resize-module-container__button_type-deny");
-const closeButton: HTMLButtonElement =  document.querySelector(".resize-module-container__close-button");
+
+const backImage: HTMLElement = cropPopup.querySelector(".resize-module-container__body-image");
+const frontImage: HTMLElement = cropPopup.querySelector(".resize-module-container__body-image-area");
+const confirmButton: HTMLButtonElement = cropPopup.querySelector(".resize-module-container__button_type-confirm");
+const denyButton: HTMLButtonElement = cropPopup.querySelector(".resize-module-container__button_type-deny");
+const closeButton: HTMLButtonElement = cropPopup.querySelector(".resize-module-container__close-button");
 
 let viewportImageOffset = backImage.getBoundingClientRect();
 
@@ -127,35 +127,35 @@ const imageSetAreaPos = (evt: MouseEvent) => {
     }
   }
 
-  document.addEventListener("touchmove", imageScrollWithArea);
-  document.addEventListener("mousemove", imageScrollWithArea);
+  cropPopup.addEventListener("touchmove", imageScrollWithArea);
+  cropPopup.addEventListener("mousemove", imageScrollWithArea);
 };
 
 backImage.addEventListener("mousedown", imageSetAreaPos);
 backImage.addEventListener("touchstart", imageSetAreaPos);
 
-document.querySelector(".scale-cube_pos_tr").addEventListener("mousedown", () => {
+cropPopup.querySelector(".scale-cube_pos_tr").addEventListener("mousedown", () => {
   scrollDirection = 1;
 });
-document.querySelector(".scale-cube_pos_tl").addEventListener("mousedown", () => {
+cropPopup.querySelector(".scale-cube_pos_tl").addEventListener("mousedown", () => {
   scrollDirection = 2;
 });
-document.querySelector(".scale-cube_pos_bl").addEventListener("mousedown", () => {
+cropPopup.querySelector(".scale-cube_pos_bl").addEventListener("mousedown", () => {
   scrollDirection = 3;
 });
-document.querySelector(".scale-cube_pos_br").addEventListener("mousedown", () => {
+cropPopup.querySelector(".scale-cube_pos_br").addEventListener("mousedown", () => {
   scrollDirection = 4;
 });
-document.querySelector(".scale-cube_pos_tr").addEventListener("touchstart", () => {
+cropPopup.querySelector(".scale-cube_pos_tr").addEventListener("touchstart", () => {
   scrollDirection = 1;
 });
-document.querySelector(".scale-cube_pos_tl").addEventListener("touchstart", () => {
+cropPopup.querySelector(".scale-cube_pos_tl").addEventListener("touchstart", () => {
   scrollDirection = 2;
 });
-document.querySelector(".scale-cube_pos_bl").addEventListener("touchstart", () => {
+cropPopup.querySelector(".scale-cube_pos_bl").addEventListener("touchstart", () => {
   scrollDirection = 3;
 });
-document.querySelector(".scale-cube_pos_br").addEventListener("touchstart", () => {
+cropPopup.querySelector(".scale-cube_pos_br").addEventListener("touchstart", () => {
   scrollDirection = 4;
 });
 
@@ -296,24 +296,28 @@ const imageClickUp = () => {
   setImagesPosition();
 
   scrollDirection = 0;
-  document.removeEventListener("mousemove", imageScrollWithArea);
-  document.removeEventListener("touchmove", imageScrollWithArea);
+  cropPopup.removeEventListener("mousemove", imageScrollWithArea);
+  cropPopup.removeEventListener("touchmove", imageScrollWithArea);
 };
 
-document.addEventListener("mouseup", imageClickUp);
-document.addEventListener("touchend", imageClickUp);
+cropPopup.addEventListener("mouseup", imageClickUp);
+cropPopup.addEventListener("touchend", imageClickUp);
 
 const cropFileInputChangeListener = async (evt: Event) => {
   currentFileInput = evt.target as HTMLInputElement;
 
-  targetWidth = Number(currentFileInput.getAttribute('data-target-width'));
-  targetHeight = Number(currentFileInput.getAttribute('data-target-height'));
-  const moduleTitleText = currentFileInput.getAttribute('data-module-title');
+  targetWidth = Number(currentFileInput.dataset.targetWidth);
+  targetHeight = Number(currentFileInput.dataset.targetHeight);
 
-  if (moduleTitleText !== "" || moduleTitleText !== undefined) {
-    moduleTitle.textContent = moduleTitleText;
-  } else {
-    moduleTitle.textContent = "Модуль обработки изображений";
+  const moduleHeaderElement: HTMLElement = cropPopup.querySelector(".resize-module-container__header-text");
+  const moduleDescriptionElement: HTMLElement = cropPopup.querySelector(".resize-module-container__body-paragraph");
+
+  if (currentFileInput.dataset.moduleHeader) {
+    moduleHeaderElement.textContent = currentFileInput.dataset.moduleHeader;
+  }
+  
+  if (currentFileInput.dataset.moduleDescription) {
+    moduleDescriptionElement.textContent = currentFileInput.dataset.moduleDescription;
   }
 
   const file: File = currentFileInput.files[0];
@@ -386,7 +390,7 @@ const confirmButtonClickListener = () => {
   const dx = initImageWidth / viewportImageOffset.width;
   const dy = initImageHeight / viewportImageOffset.height;
 
-  const canvas: HTMLCanvasElement = document.querySelector('.canvas_crop');
+  const canvas: HTMLCanvasElement = cropPopup.querySelector('.canvas_crop');
   canvas.width = targetWidth;
   canvas.height = targetHeight;
   const context = canvas.getContext('2d');
@@ -416,16 +420,16 @@ const setImagesWidth = () => {
   frontImage.style.height = (viewportImageOffset.height - areaTop - areaBottom) + "px";
   frontImage.style.width = (viewportImageOffset.width - areaLeft - areaRight) + "px";
 
-  (document.querySelector(".resize-module-container__background_pos_t") as HTMLElement).style.height = areaTop + "px";
-  (document.querySelector(".resize-module-container__background_pos_b") as HTMLElement).style.height = areaBottom + "px";
+  (cropPopup.querySelector(".resize-module-container__background_pos_t") as HTMLElement).style.height = areaTop + "px";
+  (cropPopup.querySelector(".resize-module-container__background_pos_b") as HTMLElement).style.height = areaBottom + "px";
 
-  (document.querySelector(".resize-module-container__background_pos_l") as HTMLElement).style.top = areaTop + "px";
-  (document.querySelector(".resize-module-container__background_pos_l") as HTMLElement).style.bottom = areaBottom + "px";
-  (document.querySelector(".resize-module-container__background_pos_l") as HTMLElement).style.width = areaLeft + "px";
+  (cropPopup.querySelector(".resize-module-container__background_pos_l") as HTMLElement).style.top = areaTop + "px";
+  (cropPopup.querySelector(".resize-module-container__background_pos_l") as HTMLElement).style.bottom = areaBottom + "px";
+  (cropPopup.querySelector(".resize-module-container__background_pos_l") as HTMLElement).style.width = areaLeft + "px";
 
-  (document.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.top = areaTop + "px";
-  (document.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.bottom = areaBottom + "px";
-  (document.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.width = areaRight + "px";
+  (cropPopup.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.top = areaTop + "px";
+  (cropPopup.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.bottom = areaBottom + "px";
+  (cropPopup.querySelector(".resize-module-container__background_pos_r") as HTMLElement).style.width = areaRight + "px";
 };
 
 const setImagesPosition = () => {
