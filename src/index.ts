@@ -417,7 +417,8 @@ const submitFormIfNecessary = () => {
     return;
   }
 
-  form.submit();
+  HTMLFormElement.prototype.submit.call(form);
+  //form.submit();
 };
 
 const removeUpdates = () => {
