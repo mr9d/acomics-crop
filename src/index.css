@@ -207,21 +207,25 @@
 .scale-cube_pos_tl {
   left: -12px;
   top: -12px;
+  cursor: nwse-resize;
 }
 
 .scale-cube_pos_tr {
   right: -12px;
   top: -12px;
+  cursor: nesw-resize;
 }
 
 .scale-cube_pos_bl {
   left: -12px;
   bottom: -12px;
+  cursor: nesw-resize;
 }
 
 .scale-cube_pos_br {
   right: -12px;
   bottom: -12px;
+  cursor: nwse-resize;
 }
 
 .resize-module-container__file_place-back {
