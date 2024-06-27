@@ -315,7 +315,7 @@ const cropFileInputChangeListener = async (evt: Event) => {
   if (currentFileInput.dataset.moduleHeader) {
     moduleHeaderElement.textContent = currentFileInput.dataset.moduleHeader;
   }
-  
+
   if (currentFileInput.dataset.moduleDescription) {
     moduleDescriptionElement.textContent = currentFileInput.dataset.moduleDescription;
   }
@@ -332,7 +332,7 @@ const cropFileInputChangeListener = async (evt: Event) => {
     img = new Image();
     img.src = fileReader.result as string;
     img.addEventListener("load", checkImageAndOpenPopup);
-  }, {once:true});
+  }, { once: true });
 };
 
 const checkImageAndOpenPopup = () => {
@@ -401,8 +401,23 @@ const confirmButtonClickListener = () => {
     dt.items.clear();
     dt.items.add(new File([blob], 'updatedFile.png', { type: "image/png" }));
     currentFileInput.files = dt.files;
+    submitFormIfNecessary();
   });
   closeResizeModule();
+};
+
+const submitFormIfNecessary = () => {
+  if (!currentFileInput.dataset.submitOnSuccess) {
+    return;
+  }
+
+  const form = currentFileInput.closest('form');
+
+  if (!form) {
+    return;
+  }
+
+  form.submit();
 };
 
 const removeUpdates = () => {
