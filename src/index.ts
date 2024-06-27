@@ -344,7 +344,7 @@ const checkImageAndOpenPopup = () => {
     openCropPopup();
     getImageData();
   } else {
-    // Если изображение уже правильного размера, ничего не делаем
+    submitFormIfNecessary();
   }
 };
 
