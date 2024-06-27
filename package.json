@@ -1,7 +1,7 @@
 {
   "name": "acomics-crop",
   "repository": "git@github.com:mr9d/acomics-crop.git",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Acomics crop and resize library written in TypeScript",
   "main": "dist/bundle.js",
   "scripts": {
