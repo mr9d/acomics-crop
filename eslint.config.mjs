@@ -4,7 +4,19 @@ import tseslint from "typescript-eslint";
 
 
 export default [
-  {languageOptions: { globals: globals.browser }},
+  {
+    languageOptions: {
+      globals: globals.browser
+    },
+    overrides: [
+      {
+        files: ["release.js", "webpack.config.js"],
+        languageOptions: {
+          globals: globals.node
+        }
+      }
+    ]
+  },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -14,5 +26,5 @@ export default [
       indent: ["error", 2],
       eqeqeq: ["error", "always"],
     }
-  }
+  },
 ];
